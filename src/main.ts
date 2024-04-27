@@ -13,18 +13,22 @@ const initApp= ():void => {
       evt.preventDefault();
       const input = document.getElementById("newItem") as HTMLInputElement;
       const newEntryText: string = input.value.trim();
-      if(! newEntryText.length) return
+      if(!newEntryText.length) return
 
-      const itemiId:number = fulllist.list.length
-      ? parseInt(fulllist.list[fulllist.list.length - 1].id) + 1
-      : 1
+      //To find out next id number:
+      const itemId:number = fulllist.list.length
+         //it counts the next id number when we already have something inside ("true"):
+         ? parseInt(fulllist.list[fulllist.list.length - 1].id) + 1
+         // otherwise it would be the first item:
+         : 1
+      //console.log(itemiId);
+      //console.log(parseInt(fulllist.list[fulllist.list.length - 1].id) + 1) i.e. next number;
+      //console.log(parseInt(fulllist.list[fulllist.list.length - 1].id)) i.e current number;
 
-      const newItem = new ListItem(itemiId.toString(), newEntryText)
+      const newItem = new ListItem(itemId.toString(), newEntryText)
       fulllist.addItem(newItem);
       template.render(fulllist);
-
    })
-
    const clearItems = document.getElementById("clearItemsButton") as HTMLButtonElement;
 
    clearItems.addEventListener("click", (evt):void => {
@@ -32,10 +36,8 @@ const initApp= ():void => {
       fulllist.clearList();
       template.clear();
    })
-
    fulllist.load();
    template.render(fulllist)
-
 }
 
 document.addEventListener("DOMContentLoaded", initApp);

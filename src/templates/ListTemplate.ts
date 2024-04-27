@@ -9,10 +9,12 @@ interface DomList {
 export default class listTamplate implements DomList {
 
    ul: HTMLUListElement;
-   
+
    static instance: listTamplate = new listTamplate();
 
-   private constructor(){this.ul = document.getElementById("listItems") as HTMLUListElement;}
+   private constructor() {
+      this.ul = document.getElementById("listItems") as HTMLUListElement;
+   }
 
    clear(): void {
       this.ul.innerHTML = "";
@@ -40,16 +42,17 @@ export default class listTamplate implements DomList {
 
          const label = document.createElement("label") as HTMLLabelElement;
          label.htmlFor = item.id;
+         // Item prop is a description written in interface "Item" in ListItem.js:
          label.textContent = item.item;
          li.append(label);
-
 
          const btn = document.createElement("button") as HTMLButtonElement;
          btn.className = "button";
          btn.textContent = "X";
          li.append(btn);
 
-         btn.addEventListener("click", ()=>{
+         btn.addEventListener("click", (evt)=>{
+            evt.preventDefault();
             fullList.removeItem(item.id);
             this.render(fullList);
          })
